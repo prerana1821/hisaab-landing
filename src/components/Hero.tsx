@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Sparkles, Shield, Zap, PartyPopper } from "lucide-react";
-import heroPhoneFriendly from "@/assets/hero-phone-friendly.jpg";
+import heroPhoneFriendly from "@/assets/hero-phone-improved.jpg";
 
 const Hero = () => {
   const handleWhatsAppClick = (goalType: string) => {
