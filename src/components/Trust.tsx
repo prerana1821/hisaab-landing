@@ -87,11 +87,19 @@ const Trust = () => {
         <div className="mb-20 text-center relative">
           <div className="relative inline-block">
             <div className="absolute inset-0 bg-gradient-to-r from-teal/20 to-lime/20 rounded-3xl blur-2xl transform rotate-1"></div>
-            {/* <img
-              src={dataSecurityModern}
-              alt="Modern data security illustration showing encrypted WhatsApp messages"
-              className="relative w-full max-w-2xl mx-auto rounded-3xl shadow-glow hover:scale-105 transition-transform duration-700"
-            /> */}
+            <div className="relative w-full max-w-2xl mx-auto h-80 rounded-3xl shadow-glow bg-gradient-to-br from-teal/10 to-lime/10 flex items-center justify-center border-2 border-teal/20">
+              <div className="text-center space-y-6">
+                <div className="text-7xl">🔒💚</div>
+                <div className="space-y-2">
+                  <p className="text-xl font-bold text-foreground">
+                    Bank-Level Security
+                  </p>
+                  <p className="text-muted-foreground">
+                    Your data is encrypted and protected
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
           <div className="mt-8 flex items-center justify-center gap-6 text-sm text-muted-foreground">
             <div className="flex items-center gap-2">

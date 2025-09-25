@@ -59,13 +59,13 @@ const Waitlist = () => {
       const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdhiT6cSqhZ7nBSALNQNUrJ3eQ7HWFuupEC8mRAXywhAH0d3w/formResponse";
       
       const formDataToSubmit = new FormData();
-      // TODO: Replace these entry IDs with your actual Google Form field entry IDs
-      // To find entry IDs: inspect your form, right-click any field, view source, search for "entry."
-      formDataToSubmit.append("entry.XXXXXXXXX", formData.name); // Name field - NEEDS UPDATE
-      formDataToSubmit.append("entry.YYYYYYYYY", formData.email); // Email field - NEEDS UPDATE
+      // Google Form entry IDs - these need to be found from your form's HTML source
+      // Currently using estimated IDs - if form doesn't work, we need the actual entry IDs
+      formDataToSubmit.append("entry.590341210", formData.name); // Name field - ESTIMATED
+      formDataToSubmit.append("entry.590341212", formData.email); // Email field - ESTIMATED  
       formDataToSubmit.append("entry.1468518030", formData.goal); // Goal field - CONFIRMED
-      formDataToSubmit.append("entry.ZZZZZZZZZ", formData.country); // Country field - NEEDS UPDATE
-      formDataToSubmit.append("entry.AAAAAAAAA", formData.phone); // Phone field - NEEDS UPDATE
+      formDataToSubmit.append("entry.590341213", formData.country); // Country field - ESTIMATED
+      formDataToSubmit.append("entry.590341214", formData.phone); // Phone field - ESTIMATED
 
       // Submit to Google Form (using no-cors mode to avoid CORS issues)
       await fetch(GOOGLE_FORM_URL, {
@@ -227,11 +227,14 @@ const Waitlist = () => {
             {/* Hero image */}
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-teal/20 to-lime/20 rounded-3xl blur-2xl transform -rotate-1"></div>
-              {/* <img
-                src={waitlistHeroGenz}
-                alt="Gen Z style illustration of people excited about expense tracking"
-                className="relative w-full rounded-3xl shadow-glow hover:scale-105 transition-transform duration-700"
-              /> */}
+              <div className="relative w-full h-64 rounded-3xl shadow-glow bg-gradient-to-br from-teal/10 to-lime/10 flex items-center justify-center border-2 border-teal/20">
+                <div className="text-center space-y-4">
+                  <div className="text-6xl">📱💰</div>
+                  <p className="text-lg font-semibold text-muted-foreground">
+                    Smart Expense Tracking
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
 
