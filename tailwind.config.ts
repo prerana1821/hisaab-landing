@@ -23,12 +23,24 @@ export default {
         sans: ["var(--font-body)"],
       },
       colors: {
-        // Hisaab brand colors
+        // Enhanced brand colors
         teal: {
           DEFAULT: "hsl(var(--teal))",
           light: "hsl(var(--teal-light))",
+          glow: "hsl(var(--teal-glow))",
         },
-        lime: "hsl(var(--lime))",
+        lime: {
+          DEFAULT: "hsl(var(--lime))",
+          light: "hsl(var(--lime-light))",
+        },
+        purple: {
+          DEFAULT: "hsl(var(--purple))",
+          light: "hsl(var(--purple-light))",
+        },
+        pink: {
+          DEFAULT: "hsl(var(--pink))",
+          light: "hsl(var(--pink-light))",
+        },
         charcoal: "hsl(var(--charcoal))",
         // Semantic colors using design system
         border: "hsl(var(--border))",
@@ -83,10 +95,14 @@ export default {
       boxShadow: {
         soft: "var(--shadow-soft)",
         card: "var(--shadow-card)",
+        glow: "var(--shadow-glow)",
+        purple: "var(--shadow-purple)",
+        pink: "var(--shadow-pink)",
       },
       spacing: {
         '18': '4.5rem',
         '88': '22rem',
+        '128': '32rem',
       },
       keyframes: {
         "accordion-down": {
