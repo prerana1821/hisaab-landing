@@ -56,16 +56,16 @@ const Waitlist = () => {
 
     try {
       // Submit to Google Form
-      // Replace this URL with your actual Google Form URL
-      const GOOGLE_FORM_URL = "https://docs.google.com/forms/u/0/d/e/YOUR_FORM_ID/formResponse";
+      const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdhiT6cSqhZ7nBSALNQNUrJ3eQ7HWFuupEC8mRAXywhAH0d3w/formResponse";
       
       const formDataToSubmit = new FormData();
-      // Replace these entry IDs with your actual Google Form field entry IDs
-      formDataToSubmit.append("entry.000000000", formData.name); // Name field
-      formDataToSubmit.append("entry.111111111", formData.email); // Email field
-      formDataToSubmit.append("entry.222222222", formData.goal); // Goal field
-      formDataToSubmit.append("entry.333333333", formData.country); // Country field
-      formDataToSubmit.append("entry.444444444", formData.phone); // Phone field
+      // TODO: Replace these entry IDs with your actual Google Form field entry IDs
+      // To find entry IDs: inspect your form, right-click any field, view source, search for "entry."
+      formDataToSubmit.append("entry.XXXXXXXXX", formData.name); // Name field - NEEDS UPDATE
+      formDataToSubmit.append("entry.YYYYYYYYY", formData.email); // Email field - NEEDS UPDATE
+      formDataToSubmit.append("entry.1468518030", formData.goal); // Goal field - CONFIRMED
+      formDataToSubmit.append("entry.ZZZZZZZZZ", formData.country); // Country field - NEEDS UPDATE
+      formDataToSubmit.append("entry.AAAAAAAAA", formData.phone); // Phone field - NEEDS UPDATE
 
       // Submit to Google Form (using no-cors mode to avoid CORS issues)
       await fetch(GOOGLE_FORM_URL, {
