@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -19,6 +19,7 @@ import {
   Clock,
   Gift,
 } from "lucide-react";
+import QRCode from "qrcode";
 // import waitlistHeroGenz from "@/assets/waitlist-hero-genz.jpg";
 
 const Waitlist = () => {
@@ -30,7 +31,34 @@ const Waitlist = () => {
     phone: "",
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [qrCodeUrl, setQrCodeUrl] = useState("");
   const { toast } = useToast();
+
+  // Generate QR code when form is submitted
+  useEffect(() => {
+    const generateQRCode = async () => {
+      if (isSubmitted && formData.name && formData.goal) {
+        const whatsappMessage = `Hi Hisaab! I just joined the waitlist. Name: ${formData.name}. Goal: ${formData.goal}. Ready to start tracking!`;
+        const whatsappUrl = `https://wa.me/14155238886?text=${encodeURIComponent(whatsappMessage)}`;
+        
+        try {
+          const qrUrl = await QRCode.toDataURL(whatsappUrl, {
+            width: 200,
+            margin: 2,
+            color: {
+              dark: '#006D73', // teal color
+              light: '#FFFFFF'
+            }
+          });
+          setQrCodeUrl(qrUrl);
+        } catch (error) {
+          console.error('Error generating QR code:', error);
+        }
+      }
+    };
+
+    generateQRCode();
+  }, [isSubmitted, formData.name, formData.goal]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,14 +86,32 @@ const Waitlist = () => {
       // Submit to Google Form
       const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdhiT6cSqhZ7nBSALNQNUrJ3eQ7HWFuupEC8mRAXywhAH0d3w/formResponse";
       
+      // Create form data for submission
       const formDataToSubmit = new FormData();
-      // Google Form entry IDs - these need to be found from your form's HTML source
-      // Currently using estimated IDs - if form doesn't work, we need the actual entry IDs
-      formDataToSubmit.append("entry.590341210", formData.name); // Name field - ESTIMATED
-      formDataToSubmit.append("entry.590341212", formData.email); // Email field - ESTIMATED  
-      formDataToSubmit.append("entry.1468518030", formData.goal); // Goal field - CONFIRMED
-      formDataToSubmit.append("entry.590341213", formData.country); // Country field - ESTIMATED
-      formDataToSubmit.append("entry.590341214", formData.phone); // Phone field - ESTIMATED
+      
+      // Try multiple common patterns for entry IDs based on the Goal field we know (1468518030)
+      // Name field possibilities
+      formDataToSubmit.append("entry.590341211", formData.name);
+      formDataToSubmit.append("entry.1468518029", formData.name);
+      formDataToSubmit.append("entry.1468518028", formData.name);
+      
+      // Email field possibilities  
+      formDataToSubmit.append("entry.590341212", formData.email);
+      formDataToSubmit.append("entry.1468518031", formData.email);
+      formDataToSubmit.append("entry.1468518032", formData.email);
+      
+      // Goal field - CONFIRMED
+      formDataToSubmit.append("entry.1468518030", formData.goal);
+      
+      // Country field possibilities
+      formDataToSubmit.append("entry.590341213", formData.country);
+      formDataToSubmit.append("entry.1468518033", formData.country);
+      formDataToSubmit.append("entry.1468518034", formData.country);
+      
+      // Phone field possibilities
+      formDataToSubmit.append("entry.590341214", formData.phone);
+      formDataToSubmit.append("entry.1468518035", formData.phone);
+      formDataToSubmit.append("entry.1468518036", formData.phone);
 
       // Submit to Google Form (using no-cors mode to avoid CORS issues)
       await fetch(GOOGLE_FORM_URL, {
@@ -128,18 +174,36 @@ const Waitlist = () => {
 
             {/* Enhanced QR Code section */}
             <div className="bg-gradient-to-br from-white via-white to-gray-50 p-8 rounded-2xl shadow-card border-2 border-teal/20 hover:border-teal/40 transition-all group">
-              <div className="w-40 h-40 bg-gradient-to-br from-teal/10 to-lime/10 mx-auto rounded-2xl flex items-center justify-center border-2 border-teal/30 group-hover:scale-105 transition-transform">
-                <div className="text-center space-y-3">
-                  <QrCode className="w-12 h-12 text-teal mx-auto" />
-                  <div>
-                    <p className="text-sm font-bold text-charcoal">
-                      Scan to start
-                    </p>
-                    <p className="text-xs text-muted-foreground">
-                      Opens WhatsApp
-                    </p>
+              <div className="w-48 h-48 bg-gradient-to-br from-teal/10 to-lime/10 mx-auto rounded-2xl flex items-center justify-center border-2 border-teal/30 group-hover:scale-105 transition-transform">
+                {qrCodeUrl ? (
+                  <div className="text-center space-y-3">
+                    <img 
+                      src={qrCodeUrl} 
+                      alt="WhatsApp QR Code" 
+                      className="w-32 h-32 mx-auto rounded-lg border border-teal/20"
+                    />
+                    <div>
+                      <p className="text-sm font-bold text-charcoal">
+                        Scan to start
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        Opens WhatsApp
+                      </p>
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  <div className="text-center space-y-3">
+                    <QrCode className="w-12 h-12 text-teal mx-auto animate-pulse" />
+                    <div>
+                      <p className="text-sm font-bold text-charcoal">
+                        Generating QR code...
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        Opens WhatsApp
+                      </p>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
 
