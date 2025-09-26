@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Sparkles, Shield, Zap, PartyPopper } from "lucide-react";
 import heroPhoneFriendly from "@/assets/hero-phone-3d.png";
+import ThreeCoins from "./ThreeCoins";
 
 const Hero = () => {
   const handleWhatsAppClick = (goalType: string) => {
@@ -117,9 +118,14 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Right column - Phone mockup */}
-          <div className="flex justify-center lg:justify-end">
-            <div className="relative group">
+          {/* Right column - Phone mockup with 3D coins */}
+          <div className="flex justify-center lg:justify-end relative">
+            {/* 3D Floating coins background */}
+            <div className="absolute inset-0 w-full h-full overflow-hidden">
+              <ThreeCoins />
+            </div>
+            
+            <div className="relative group z-10">
               <div className="absolute -inset-8 bg-gradient-to-r from-purple/20 via-teal/20 to-lime/20 rounded-3xl blur-2xl opacity-70 group-hover:opacity-100 transition-opacity duration-500"></div>
               <img
                 src={heroPhoneFriendly}
@@ -128,19 +134,19 @@ const Hero = () => {
               />
 
               {/* Floating elements */}
-              <div className="absolute -top-6 -right-6 w-16 h-16 bg-gradient-to-br from-lime to-lime-light rounded-full flex items-center justify-center animate-float shadow-glow">
+              <div className="absolute -top-6 -right-6 w-16 h-16 bg-gradient-to-br from-lime to-lime-light rounded-full flex items-center justify-center animate-float shadow-glow z-20">
                 <Sparkles className="w-8 h-8 text-charcoal" />
               </div>
 
               <div
-                className="absolute -bottom-8 -left-8 w-20 h-20 glass-effect rounded-full flex items-center justify-center animate-float border border-white/30"
+                className="absolute -bottom-8 -left-8 w-20 h-20 glass-effect rounded-full flex items-center justify-center animate-float border border-white/30 z-20"
                 style={{ animationDelay: "1.5s" }}
               >
                 <Shield className="w-10 h-10 text-teal" />
               </div>
 
               <div
-                className="absolute top-1/2 -right-12 w-12 h-12 bg-gradient-to-br from-purple to-pink rounded-full flex items-center justify-center animate-float opacity-80"
+                className="absolute top-1/2 -right-12 w-12 h-12 bg-gradient-to-br from-purple to-pink rounded-full flex items-center justify-center animate-float opacity-80 z-20"
                 style={{ animationDelay: "0.8s" }}
               >
                 <span className="text-white text-xl">💸</span>
