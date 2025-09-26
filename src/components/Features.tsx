@@ -217,8 +217,8 @@ const Features = () => {
 
             {/* Hisaab */}
             <div className="relative p-10 rounded-3xl border-2 border-teal/30 overflow-hidden hover-lift bg-gradient-to-br from-teal/5 via-lime/5 to-purple/5">
-              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
-                <span className="bg-gradient-to-r from-lime to-lime-light text-charcoal px-6 py-3 text-lg font-black rounded-full flex items-center gap-2 shadow-glow animate-pulse-glow">
+              <div className="absolute -top-4 w-64 p-6 left-1/2 transform -translate-x-1/2 z-10">
+                <span className="bg-gradient-to-r from-lime to-lime-light text-charcoal text-base font-medium rounded-full flex items-center gap-2 p-2 justify-center  shadow-glow animate-pulse-glow">
                   <Sparkles className="w-5 h-5" />
                   HISAAB WAY
                 </span>
