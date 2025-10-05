@@ -1,19 +1,22 @@
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
+import { Play, Pause } from "lucide-react";
 import logoImage from "@assets/image_1759671069209.png";
 
 interface HeroSectionProps {
   onWaitlistClick: () => void;
+  onAudioToggle: () => void;
+  isAudioPlaying: boolean;
 }
 
 const typewriterLines = [
   "Keep track of your money, simply!",
   "Whether you earn ₹10k or ₹10L,\napna hisaab keeps you aware, not anxious.",
-  "The easiest way to stop asking, \"Where did all my money go?\"",
-  "You handle life. We'll handle the math."
+  'The easiest way to stop asking, "Where did all my money go?"',
+  "You handle life. We'll handle the math.",
 ];
 
-export default function HeroSection({ onWaitlistClick }: HeroSectionProps) {
+export default function HeroSection({ onWaitlistClick, onAudioToggle, isAudioPlaying }: HeroSectionProps) {
   const [currentLineIndex, setCurrentLineIndex] = useState(0);
   const [displayedText, setDisplayedText] = useState("");
   const [isTypingComplete, setIsTypingComplete] = useState(false);
@@ -34,7 +37,7 @@ export default function HeroSection({ onWaitlistClick }: HeroSectionProps) {
       } else {
         clearInterval(typingInterval);
         setTimeout(() => {
-          setCurrentLineIndex(prev => prev + 1);
+          setCurrentLineIndex((prev) => prev + 1);
         }, 1500);
       }
     }, 50);
@@ -47,32 +50,39 @@ export default function HeroSection({ onWaitlistClick }: HeroSectionProps) {
       {/* Minimal Navigation */}
       <nav className="flex items-center justify-between border-b border-border px-6 py-4 md:px-12">
         <div className="flex items-center gap-8">
-          <button 
+          <button
             className="hover-elevate p-2 rounded-lg bg-[#DCF8C6] dark:bg-[#056162]"
             aria-label="Logo"
             data-testid="button-logo"
           >
-            <img 
-              src={logoImage} 
-              alt="Apna Hisaab Logo" 
+            <img
+              src={logoImage}
+              alt="Apna Hisaab Logo"
               className="h-8 w-8 object-contain dark:invert"
             />
           </button>
         </div>
-        
+
         <div className="flex items-center gap-6 text-xs uppercase tracking-widest md:gap-8">
-          <button 
-            className="hover-elevate px-2 py-1 text-foreground"
-            data-testid="button-search"
+          <Button
+            size="icon"
+            variant="ghost"
+            onClick={onAudioToggle}
+            data-testid="button-audio-toggle"
+            className="h-8 w-8"
           >
-            Search
-          </button>
-          <button 
+            {isAudioPlaying ? (
+              <Pause className="h-4 w-4" />
+            ) : (
+              <Play className="h-4 w-4" />
+            )}
+          </Button>
+          <button
             onClick={onWaitlistClick}
             className="hover-elevate px-2 py-1 text-foreground"
             data-testid="button-nav-waitlist"
           >
-            Join
+            Join the waitlist
           </button>
         </div>
       </nav>
@@ -82,7 +92,9 @@ export default function HeroSection({ onWaitlistClick }: HeroSectionProps) {
         {/* Main Typography - Zara Style */}
         <div className="text-center">
           <h1 className="font-serif text-7xl font-black leading-[0.9] tracking-tight text-foreground md:text-8xl lg:text-9xl">
-            apna<br />hisaab
+            apna
+            <br />
+            hisaab
           </h1>
           <div className="mt-8 min-h-[4rem] md:min-h-[3rem]">
             <p className="text-xs tracking-[0.3em] text-muted-foreground md:text-sm whitespace-pre-line">

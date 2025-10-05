@@ -4,18 +4,16 @@ import ValueProposition from "@/components/ValueProposition";
 import StatsShowcase from "@/components/StatsShowcase";
 import WaitlistSection from "@/components/WaitlistSection";
 import Footer from "@/components/Footer";
-import { Button } from "@/components/ui/button";
-import { Play, Pause } from "lucide-react";
 
-const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdhiT6cSqhZ7nBSALNQNUrJ3eQ7HWFuupEC8mRAXywhAH0d3w/viewform";
+const GOOGLE_FORM_URL =
+  "https://docs.google.com/forms/d/e/1FAIpQLSdhiT6cSqhZ7nBSALNQNUrJ3eQ7HWFuupEC8mRAXywhAH0d3w/viewform";
 
 export default function Home() {
   const audioRef = useRef<HTMLAudioElement>(null);
-  const [showControls, setShowControls] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
 
   const handleWaitlistClick = useCallback(() => {
-    window.open(GOOGLE_FORM_URL, '_blank', 'noopener,noreferrer');
+    window.open(GOOGLE_FORM_URL, "_blank", "noopener,noreferrer");
   }, []);
 
   const toggleAudio = useCallback(() => {
@@ -42,7 +40,9 @@ export default function Home() {
         await audio.play();
         setIsPlaying(true);
       } catch (error) {
-        console.log('Autoplay was prevented. Click the play button to start audio.');
+        console.log(
+          "Autoplay was prevented. Click the play button to start audio.",
+        );
       }
     };
 
@@ -50,31 +50,22 @@ export default function Home() {
       setIsPlaying(false);
     };
 
-    audio.addEventListener('ended', handleEnded);
+    audio.addEventListener("ended", handleEnded);
     playAudio();
 
     return () => {
-      audio.removeEventListener('ended', handleEnded);
+      audio.removeEventListener("ended", handleEnded);
     };
   }, []);
 
   return (
     <div className="min-h-screen">
-      <audio ref={audioRef} src="/budgeting_audio.mp3" />
-      {showControls && (
-        <div className="fixed bottom-4 right-4 z-50">
-          <Button
-            size="icon"
-            variant="default"
-            onClick={toggleAudio}
-            data-testid="button-audio-toggle"
-            className="h-12 w-12 rounded-full shadow-lg"
-          >
-            {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
-          </Button>
-        </div>
-      )}
-      <HeroSection onWaitlistClick={handleWaitlistClick} />
+      <audio ref={audioRef} src="/hisaab_voice.mp3" />
+      <HeroSection 
+        onWaitlistClick={handleWaitlistClick}
+        onAudioToggle={toggleAudio}
+        isAudioPlaying={isPlaying}
+      />
       <ValueProposition />
       <StatsShowcase />
       <WaitlistSection onJoinClick={handleWaitlistClick} />
