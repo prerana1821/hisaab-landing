@@ -78,12 +78,12 @@ export default function HeroSection({
             {isAudioPlaying ? (
               <>
                 <Pause className="h-4 w-4" />
-                Stop
+                <p>Stop</p>
               </>
             ) : (
               <>
                 <Play className="h-4 w-4" />
-                Play
+                <p>Play</p>
               </>
             )}
           </Button>
