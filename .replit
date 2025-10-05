@@ -1,1 +1,16 @@
 modules = ["nodejs-20"]
+
+[workflows]
+
+[[workflows.workflow]]
+name = "Start application"
+mode = "sequential"
+author = 39378330
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npm run dev"
+
+[[ports]]
+localPort = 5000
+externalPort = 80
