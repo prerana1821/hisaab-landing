@@ -1,90 +1,110 @@
 import { Button } from "@/components/ui/button";
-import { Play, Square } from "lucide-react";
-import { useAudioPlayer } from "@/hooks/use-audio-player";
-import { useTypewriter } from "@/hooks/use-typewriter";
-import audioFile from "@assets/ElevenLabs_2025-10-04T17_44_32_Simran – Bright, Fun, and Friendly BFF Voice for Gen Z Gossip_pvc_sp88_s50_sb75_se8_m2_1759604699520.mp3";
-import logoImage from "@assets/hisaab_logo.png";
+import { useState, useEffect } from "react";
+import logoImage from "@assets/image_1759671069209.png";
 
 interface HeroSectionProps {
   onWaitlistClick: () => void;
 }
 
+const typewriterLines = [
+  "Keep track of your money, simply!",
+  "Whether you earn ₹10k or ₹10L,\napna hisaab keeps you aware, not anxious.",
+  "The easiest way to stop asking, \"Where did all my money go?\"",
+  "You handle life. We'll handle the math."
+];
+
 export default function HeroSection({ onWaitlistClick }: HeroSectionProps) {
-  const { isPlaying, toggle } = useAudioPlayer(audioFile);
-  const { displayText } = useTypewriter("If you can chat, you can save.", 80);
+  const [currentLineIndex, setCurrentLineIndex] = useState(0);
+  const [displayedText, setDisplayedText] = useState("");
+  const [isTypingComplete, setIsTypingComplete] = useState(false);
+
+  useEffect(() => {
+    if (currentLineIndex >= typewriterLines.length) {
+      setIsTypingComplete(true);
+      return;
+    }
+
+    const currentLine = typewriterLines[currentLineIndex];
+    let charIndex = 0;
+
+    const typingInterval = setInterval(() => {
+      if (charIndex <= currentLine.length) {
+        setDisplayedText(currentLine.slice(0, charIndex));
+        charIndex++;
+      } else {
+        clearInterval(typingInterval);
+        setTimeout(() => {
+          setCurrentLineIndex(prev => prev + 1);
+        }, 1500);
+      }
+    }, 50);
+
+    return () => clearInterval(typingInterval);
+  }, [currentLineIndex]);
 
   return (
     <section className="relative flex min-h-screen w-full flex-col bg-background">
       {/* Minimal Navigation */}
       <nav className="flex items-center justify-between border-b border-border px-6 py-4 md:px-12">
         <div className="flex items-center gap-8">
-          <img
-            src={logoImage}
-            alt="Apna Hisaab Logo"
-            className="h-12 w-12"
-            data-testid="img-logo"
-          />
-        </div>
-
-        <div className="flex items-center gap-6 text-xs uppercase tracking-widest md:gap-8">
-          <button
-            onClick={toggle}
-            className="hover-elevate flex items-center gap-2 px-2 py-1 text-foreground"
-            aria-label={isPlaying ? "Stop audio" : "Play audio"}
-            data-testid="button-audio-toggle"
+          <button 
+            className="hover-elevate p-2 rounded-lg bg-[#DCF8C6] dark:bg-[#056162]"
+            aria-label="Logo"
+            data-testid="button-logo"
           >
-            {isPlaying ? (
-              <Square className="h-4 w-4" />
-            ) : (
-              <Play className="h-4 w-4" />
-            )}
-            <span className="hidden md:inline">
-              {isPlaying ? "Stop" : "Play"}
-            </span>
+            <img 
+              src={logoImage} 
+              alt="Apna Hisaab Logo" 
+              className="h-8 w-8 object-contain dark:invert"
+            />
           </button>
-          <button
+        </div>
+        
+        <div className="flex items-center gap-6 text-xs uppercase tracking-widest md:gap-8">
+          <button 
+            className="hover-elevate px-2 py-1 text-foreground"
+            data-testid="button-search"
+          >
+            Search
+          </button>
+          <button 
             onClick={onWaitlistClick}
             className="hover-elevate px-2 py-1 text-foreground"
             data-testid="button-nav-waitlist"
           >
-            Join the waitlist
+            Join
           </button>
         </div>
       </nav>
 
       {/* Hero Content */}
       <div className="relative flex flex-1 flex-col items-center justify-center px-8 py-32">
-        {/* Main Headline */}
-        <div className="max-w-4xl text-center">
-          <h1 className="mb-8 font-serif text-5xl font-black leading-tight text-foreground md:text-6xl lg:text-7xl">
-            apna hisaab{" "}
+        {/* Main Typography - Zara Style */}
+        <div className="text-center">
+          <h1 className="font-serif text-7xl font-black leading-[0.9] tracking-tight text-foreground md:text-8xl lg:text-9xl">
+            apna<br />hisaab
           </h1>
-          <div className="mb-8 space-y-3 text-base text-muted-foreground md:text-lg">
-            <p>No apps. No Excel. No overthinking.</p>
-          </div>
-
-          {/* Tagline */}
-          <div className="mb-12">
-            <p className="min-h-[28px] text-lg font-semibold text-foreground">
-              {displayText}
-              <span className="animate-pulse">|</span>
+          <div className="mt-8 min-h-[4rem] md:min-h-[3rem]">
+            <p className="text-xs tracking-[0.3em] text-muted-foreground md:text-sm whitespace-pre-line">
+              {displayedText}
+              {!isTypingComplete && <span className="animate-pulse">|</span>}
             </p>
           </div>
+        </div>
 
-          {/* CTA Button */}
-          <div className="space-y-3">
-            <Button
-              onClick={onWaitlistClick}
-              size="lg"
-              className="px-12 text-base"
-              data-testid="button-hero-waitlist"
-            >
-              Join the Waitlist →
-            </Button>
-            <p className="text-xs text-muted-foreground">
-              Limited early access
-            </p>
-          </div>
+        {/* Bottom Tagline */}
+        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 text-center">
+          <p className="mb-4 text-xs uppercase tracking-widest text-muted-foreground">
+            WhatsApp Finance Tracking
+          </p>
+          <Button
+            onClick={onWaitlistClick}
+            variant="outline"
+            data-testid="button-discover"
+            className="text-xs uppercase tracking-widest"
+          >
+            Join the Waitlist
+          </Button>
         </div>
       </div>
     </section>
