@@ -16,7 +16,11 @@ const typewriterLines = [
   "You handle life. We'll handle the math.",
 ];
 
-export default function HeroSection({ onWaitlistClick, onAudioToggle, isAudioPlaying }: HeroSectionProps) {
+export default function HeroSection({
+  onWaitlistClick,
+  onAudioToggle,
+  isAudioPlaying,
+}: HeroSectionProps) {
   const [currentLineIndex, setCurrentLineIndex] = useState(0);
   const [displayedText, setDisplayedText] = useState("");
   const [isTypingComplete, setIsTypingComplete] = useState(false);
@@ -69,12 +73,18 @@ export default function HeroSection({ onWaitlistClick, onAudioToggle, isAudioPla
             variant="ghost"
             onClick={onAudioToggle}
             data-testid="button-audio-toggle"
-            className="h-8 w-8"
+            className="h-8 w-8 hover-elevate px-2 py-1 text-foreground"
           >
             {isAudioPlaying ? (
-              <Pause className="h-4 w-4" />
+              <>
+                <Pause className="h-4 w-4" />
+                Stop
+              </>
             ) : (
-              <Play className="h-4 w-4" />
+              <>
+                <Play className="h-4 w-4" />
+                Play
+              </>
             )}
           </Button>
           <button
